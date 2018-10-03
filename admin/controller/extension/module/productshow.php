@@ -105,27 +105,31 @@ class ControllerExtensionModuleProductshow extends Controller {
             $data['frontname'] = '';
         }
 
-		$this->load->model('catalog/product');
-
-		$data['products'] = array();
-		if (!empty($this->request->post['product'])) {
-			$products = $this->request->post['product'];
-		} elseif (!empty($module_info['product'])) {
-			$products = $module_info['product'];
-		} else {
-			$products = array();
-		}
-
-		foreach ($products as $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
-
-			if ($product_info) {
-				$data['products'][] = array(
-					'product_id' => $product_info['product_id'],
-					'name'       => $product_info['name']
-				);
-			}
-		}
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // get category
+        $this->load->model('catalog/category');
+        $data['all_categorys'] = array();
+        $data['all_categorys']['all']['category_id'] = 'all';
+        $data['all_categorys']['all']['name'] = 'All categorys';
+        $data['all_categorys']['all']['selected'] = '';
+        // get all category_
+        $all_categorys_informations = $this->model_catalog_category->getCategories();
+        foreach ($all_categorys_informations as $all_categorys_information) {
+            $data['all_categorys'][$all_categorys_information['category_id']] = array(
+                'category_id' => $all_categorys_information['category_id'],
+                'name' => $all_categorys_information['name'],
+                'selected' => ""
+            );
+        }
+        //$data['all_categorys'][$all_categorys_information['category_id']]
+        if (isset($this->request->post['select_category']) && !empty($this->request->post['select_category'])) {
+            $data['all_categorys'][$this->request->post['select_category']]['selected'] = 'selected="selected"';
+        } elseif (!empty($module_info)) {
+            $data['all_categorys'][$module_info['select_category']]['selected'] = 'selected="selected"';
+        } else {
+            $data['all_categorys']['all']['selected'] = 'selected="selected"';
+        }
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		if (isset($this->request->post['limit'])) {
 			$data['limit'] = $this->request->post['limit'];

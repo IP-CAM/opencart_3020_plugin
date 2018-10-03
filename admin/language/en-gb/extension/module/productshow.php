@@ -9,7 +9,7 @@ $_['text_edit']        = 'Edit Productshow Module';
 
 // Entry
 $_['entry_name']       = 'Module Name';
-$_['front_name']       = 'Front Name';
+$_['front_name']       = 'Front Title';
 $_['entry_product']    = 'Products';
 $_['entry_limit']      = 'Limit';
 $_['entry_width']      = 'Width';
@@ -21,7 +21,7 @@ $_['help_product']     = '(Autocomplete)';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify productshow module!';
-$_['error_name']       = 'Module Name must be between 3 and 64 characters!';
+$_['error_name']       = 'Front Title must be between 3 and 64 characters!';
 $_['fronterror_name']       = 'Front Name must be between 3 and 64 characters!';
 $_['error_width']      = 'Width required!';
 $_['error_height']     = 'Height required!';
