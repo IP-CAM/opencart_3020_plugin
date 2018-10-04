@@ -135,12 +135,12 @@ class ControllerExtensionModuleProductshow extends Controller
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // get sort type
-		if (isset($this->request->post['sort_type'])) {
-			$data['sort_type'] = $this->request->post['v'];
+		if (isset($this->request->post['sort'])) {
+			$data['sort'] = $this->request->post['sort'];
 		} elseif (!empty($module_info)) {
-			$data['sort_type'] = $module_info['sort_type'];
+			$data['sort'] = $module_info['sort'];
 		} else {
-			$data['sort_type'] = '0';
+			$data['sort'] = '0';
 		}
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

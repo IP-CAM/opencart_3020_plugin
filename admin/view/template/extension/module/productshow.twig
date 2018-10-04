@@ -44,7 +44,7 @@
             </div>
           </div>
 
-
+          <!--category-product-->
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-category">Select categorys</label>
             <div class="col-sm-10">
@@ -56,7 +56,24 @@
               </select>
             </div>
           </div>
+          <!--category-product-->
 
+          <!--sort-type-->
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort">{{ entry_sort }}</label>
+            <div class="col-sm-10">
+              <select name="sort" id="input-sort" class="form-control">
+                {% if sort %}
+                <option value="0">{{ text_sort_new }}</option>
+                <option value="1" selected="selected">{{ text_sort_random }}</option>
+                {% else %}
+                <option value="0" selected="selected">{{ text_sort_new }}</option>
+                <option value="1">{{ text_sort_random }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+          <!--sort-type-->
 
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-limit">{{ entry_limit }}</label>
