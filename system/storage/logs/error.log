@@ -1,0 +1,5 @@
+2018-10-14 9:32:49 - PHP Warning:  mysqli::mysqli(): (HY000/1049): Unknown database 'opencart' in E:\wamp\www\system\library\db\mysqli.php on line 7
+2018-10-14 9:32:49 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in E:\wamp\www\system\library\db\mysqli.php on line 10
+2018-10-14 9:32:49 - PHP Warning:  DB\MySQLi::__construct(): Couldn't fetch mysqli in E:\wamp\www\system\library\db\mysqli.php on line 10
+2018-10-14 9:32:49 - PHP Notice:  Undefined variable: mysql in E:\wamp\www\install\controller\install\step_3.php on line 280
+2018-10-14 9:32:49 - PHP Notice:  Trying to get property of non-object in E:\wamp\www\install\controller\install\step_3.php on line 280

@@ -75,12 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
+    'hostname' => CI_DB_HOSTNAME,
+    'username' => CI_DB_USERNAME,
+    'password' => CI_DB_PASSWORD,
+    'database' => CI_DB_DATABASE,
+    'dbdriver' => CI_DB_DRIVER,
+    'dbprefix' => CI_DB_PREFIX,
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	'cache_on' => FALSE,

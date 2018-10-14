@@ -1,4 +1,28 @@
 <?php
+require_once ("../admin/config.php");
+
+if (!defined('CI_DB_DRIVER')){
+    define('CI_DB_DRIVER', DB_DRIVER);
+}
+if (!defined('CI_DB_HOSTNAME')){
+    define('CI_DB_HOSTNAME', DB_HOSTNAME);
+}
+if (!defined('CI_DB_USERNAME')){
+    define('CI_DB_USERNAME', DB_USERNAME);
+}
+if (!defined('CI_DB_PASSWORD')){
+    define('CI_DB_PASSWORD', DB_PASSWORD);
+}
+if (!defined('CI_DB_DATABASE')){
+    define('CI_DB_DATABASE', DB_DATABASE);
+}
+if (!defined('CI_DB_PORT')){
+    define('CI_DB_PORT', DB_PORT);
+}
+if (!defined('CI_DB_PREFIX')){
+    define('CI_DB_PREFIX', DB_PREFIX);
+}
+
 /**
  * CodeIgniter
  *
