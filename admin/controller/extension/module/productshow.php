@@ -1,8 +1,10 @@
 <?php
-class ControllerExtensionModuleProductshow extends Controller {
+class ControllerExtensionModuleProductshow extends Controller
+{
 	private $error = array();
 
-	public function index() {
+	public function index()
+	{
 		$this->load->language('extension/module/productshow');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -33,11 +35,11 @@ class ControllerExtensionModuleProductshow extends Controller {
 			$data['error_name'] = '';
 		}
 
-        if (isset($this->error['frontname'])) {
-            $data['fronterror_name'] = $this->error['frontname'];
-        } else {
-            $data['fronterror_name'] = '';
-        }
+		if (isset($this->error['frontname'])) {
+			$data['fronterror_name'] = $this->error['frontname'];
+		} else {
+			$data['fronterror_name'] = '';
+		}
 
 		if (isset($this->error['width'])) {
 			$data['error_width'] = $this->error['width'];
@@ -97,42 +99,57 @@ class ControllerExtensionModuleProductshow extends Controller {
 			$data['name'] = '';
 		}
 
-        if (isset($this->request->post['frontname'])) {
-            $data['frontname'] = $this->request->post['frontname'];
-        } elseif (!empty($module_info)) {
-            $data['frontname'] = $module_info['frontname'];
-        } else {
-            $data['frontname'] = '';
-        }
-
-		$this->load->model('catalog/product');
-
-		$data['products'] = array();
-		if (!empty($this->request->post['product'])) {
-			$products = $this->request->post['product'];
-		} elseif (!empty($module_info['product'])) {
-			$products = $module_info['product'];
+		if (isset($this->request->post['frontname'])) {
+			$data['frontname'] = $this->request->post['frontname'];
+		} elseif (!empty($module_info)) {
+			$data['frontname'] = $module_info['frontname'];
 		} else {
-			$products = array();
+			$data['frontname'] = '';
 		}
 
-		foreach ($products as $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
-
-			if ($product_info) {
-				$data['products'][] = array(
-					'product_id' => $product_info['product_id'],
-					'name'       => $product_info['name']
-				);
-			}
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // get category
+		$this->load->model('catalog/category');
+		$data['all_categorys'] = array();
+		$data['all_categorys']['all']['category_id'] = 'all';
+		$data['all_categorys']['all']['name'] = 'All categorys';
+		$data['all_categorys']['all']['selected'] = '';
+        // get all category_
+		$all_categorys_informations = $this->model_catalog_category->getCategories();
+		foreach ($all_categorys_informations as $all_categorys_information) {
+			$data['all_categorys'][$all_categorys_information['category_id']] = array(
+				'category_id' => $all_categorys_information['category_id'],
+				'name' => $all_categorys_information['name'],
+				'selected' => ""
+			);
 		}
+        //$data['all_categorys'][$all_categorys_information['category_id']]
+		if (isset($this->request->post['select_category']) && !empty($this->request->post['select_category'])) {
+			$data['all_categorys'][$this->request->post['select_category']]['selected'] = 'selected="selected"';
+		} elseif (!empty($module_info)) {
+			$data['all_categorys'][$module_info['select_category']]['selected'] = 'selected="selected"';
+		} else {
+			$data['all_categorys']['all']['selected'] = 'selected="selected"';
+		}
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // get sort type
+		if (isset($this->request->post['sort'])) {
+			$data['sort'] = $this->request->post['sort'];
+		} elseif (!empty($module_info)) {
+			$data['sort'] = $module_info['sort'];
+		} else {
+			$data['sort'] = '0';
+		}
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		if (isset($this->request->post['limit'])) {
 			$data['limit'] = $this->request->post['limit'];
 		} elseif (!empty($module_info)) {
 			$data['limit'] = $module_info['limit'];
 		} else {
-			$data['limit'] = 5;
+			$data['limit'] = 4;
 		}
 
 		if (isset($this->request->post['width'])) {
@@ -166,7 +183,8 @@ class ControllerExtensionModuleProductshow extends Controller {
 		$this->response->setOutput($this->load->view('extension/module/productshow', $data));
 	}
 
-	protected function validate() {
+	protected function validate()
+	{
 		if (!$this->user->hasPermission('modify', 'extension/module/productshow')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -175,9 +193,9 @@ class ControllerExtensionModuleProductshow extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-        if ((utf8_strlen($this->request->post['frontname']) < 3) || (utf8_strlen($this->request->post['frontname']) > 64)) {
-            $this->error['frontname'] = $this->language->get('fronterror_name');
-        }
+		if ((utf8_strlen($this->request->post['frontname']) < 3) || (utf8_strlen($this->request->post['frontname']) > 64)) {
+			$this->error['frontname'] = $this->language->get('fronterror_name');
+		}
 
 		if (!$this->request->post['width']) {
 			$this->error['width'] = $this->language->get('error_width');

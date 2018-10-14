@@ -1,16 +1,36 @@
 <?php
-class ControllerExtensionModuleProductshow extends Controller {
-	public function index($setting) {
+class ControllerExtensionModuleProductshow extends Controller
+{
+	public function index($setting)
+	{
 		$this->load->language('extension/module/productshow');
 
 		$this->load->model('catalog/product');
-
+		$this->load->model('catalog/productshow');
 		$this->load->model('tool/image');
 
+		$setting['product'] = array();
 		$data['products'] = array();
 
 		if (!$setting['limit']) {
 			$setting['limit'] = 4;
+		}
+		$limit = $setting['limit'];
+
+		if (!empty($setting['select_category'])) {
+			$category_id = $setting['select_category'];
+
+			if ($setting['sort']) {
+					// Random
+				$products = $this->model_catalog_productshow->getProductsIdByRandom($category_id, $limit);
+			} else {
+					// Sort
+				$products = $this->model_catalog_productshow->getProductsIdBySort($category_id, $limit);
+			}
+
+			foreach ($products as $key => $value) {
+				$setting['product'][] = $value['product_id'];
+			}
 		}
 
 		if (!empty($setting['product'])) {
@@ -50,18 +70,18 @@ class ControllerExtensionModuleProductshow extends Controller {
 						$rating = false;
 					}
 
-                    $data['frontname']=$setting['frontname'];
+					$data['frontname'] = $setting['frontname'];
 
 					$data['products'][] = array(
-						'product_id'  => $product_info['product_id'],
-						'thumb'       => $image,
-						'name'        => $product_info['name'],
+						'product_id' => $product_info['product_id'],
+						'thumb' => $image,
+						'name' => $product_info['name'],
 						'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
-						'price'       => $price,
-						'special'     => $special,
-						'tax'         => $tax,
-						'rating'      => $rating,
-						'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
+						'price' => $price,
+						'special' => $special,
+						'tax' => $tax,
+						'rating' => $rating,
+						'href' => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
 					);
 				}
 			}
